@@ -1,5 +1,5 @@
 /*
- * repo-rhino
+ * Pacrat
  * Copyright (C) 2024 Ariel Abreu
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,8 +18,30 @@
 
 package main
 
-import "fmt"
+import (
+	"context"
+	"flag"
+	"os"
+
+	"github.com/google/subcommands"
+)
+
+var globalConfig Config = Config{}
 
 func main() {
-	fmt.Println("Hello, World!")
+	flag.StringVar(&globalConfig.General.ServerURL, "server", "", "The URL of the Pacrat server")
+
+	uploadPGPKey := &uploadPGPKeyCommand{}
+	uploadPackage := &uploadPackageCommand{}
+
+	subcommands.Register(subcommands.HelpCommand(), "")
+	subcommands.Register(subcommands.FlagsCommand(), "")
+	subcommands.Register(subcommands.CommandsCommand(), "")
+	subcommands.Register(uploadPGPKey, "")
+	subcommands.Register(uploadPackage, "")
+	subcommands.Register(subcommands.Alias("upload", uploadPackage), "")
+
+	flag.Parse()
+
+	os.Exit(int(subcommands.Execute(context.Background())))
 }

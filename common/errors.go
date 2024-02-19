@@ -1,0 +1,21 @@
+package common
+
+const (
+	ErrCodeSuccess = iota
+	ErrCodeInternalServerError
+	ErrCodeInvalidFileUploadForm
+	ErrCodeMissingPGPKey
+	ErrCodeInvalidPackage
+	ErrCodeMissingAccessToken
+	ErrCodeEmptyAccessToken
+	ErrCodeInvalidToken
+	ErrCodeInvalidUsername
+	ErrCodeInsufficientAccessLevel
+	ErrCodeMissingPGPKeyPassphrase
+	ErrCodeInvalidPGPKeyPassphrase
+	ErrCodePackageAlreadyExists
+	ErrCodeInvalidPGPKey
+	ErrCodeNotPrivatePGPKey
+	ErrCodeNotSigningPGPKey
+	ErrCodeInvalidArchive
+)

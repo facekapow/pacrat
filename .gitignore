@@ -1,0 +1,5 @@
+build/
+tmp/
+*.tar.zst
+tmprepo/
+.vscode

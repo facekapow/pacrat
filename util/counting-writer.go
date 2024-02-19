@@ -15,3 +15,22 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+
+package util
+
+type CountingWriter struct {
+	count int
+}
+
+func NewCountingWriter() *CountingWriter {
+	return &CountingWriter{}
+}
+
+func (writer *CountingWriter) Write(data []byte) (int, error) {
+	writer.count += len(data)
+	return len(data), nil
+}
+
+func (writer *CountingWriter) Count() int {
+	return writer.count
+}

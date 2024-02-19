@@ -1,0 +1,97 @@
+#
+# Sample configuration file for Pacrat
+#
+# The lines that are commented out show the default
+# values for those fields. Lines that aren't commented
+# out show required values that MUST be changed before
+# running Pacrat.
+#
+
+#
+# OpenID Connect configuration
+#
+# This section configures Pacrat as a client for the given
+# OpenID Connect authentication server. The server must provide
+# a `pacrat_access` scope that returns a `pacrat_access` claim
+# that's either blank, `user`, or `admin` to indicate Pacrat API
+# access level.
+#
+# Pacrat must be set as a public/non-confidential client.
+#
+[oidc]
+# The OIDC endpoint to use. This is also known as the OpenID issuer.
+# You can also provide the OpenID configuration URL (ending with `/.well-known/openid-configuration`)
+# and Pacrat will figure out the issuer.
+endpoint = ""
+# The client ID to use to connect to the OpenID authorization server.
+client_id = ""
+
+#
+# Server configuration
+#
+# This section configures some important parameters for the Pacrat server.
+#
+[server]
+# The base path (or full base URL) on which Pacrat is listening externally.
+# This is important to set if you have Pacrat behind a reverse proxy on a non-root path.
+# (e.g. if you have it at `/mycooldb`, you set this to `/mycooldb` or `http://myserver.example.org/mycooldb`)
+#base_url = "/"
+# The port to listen on.
+# This is pretty straightforward: this is the port that the server will listen on.
+# Note that this has NOTHING to do with the `base_url`; this is only used for the purpose of picking a port to listen on.
+#port = 8080
+# A list of proxies that are trusted to provide real client IPs.
+# The `X-Real-IP` and `X-Forwarded-For` headers are only respected if they come from a connection with one of these IPs.
+#trusted_proxies = []
+
+#
+# Repository (database) configuration
+#
+# This section configures the repository this Pacrat instance will manage.
+#
+[db]
+# The name of the Arch Linux repository this Pacrat instance will manage.
+# This is the same name that will have to be used in the mirrorlist of systems using this repository.
+name = "mycoolrepo"
+# The compression format to use for the repository databases.
+# This accepts "gz", "bz", "xz", and "zst", along with a few aliases of each (e.g. "gzip", "bzip2", "zstd", etc.).
+#compression = "gz"
+# The path where the repository will be stored (including the databases and packages).
+# This can be an absolute path or a path relative to the working directory Pacrat is run in.
+#path = "db"
+# The path where temporary files will be stored (including uploaded packages and updated databases).
+# This MUST be on the same mountpoint as `path` since the temporary files will simply be renamed into the database path.
+#tmp_path = "tmp"
+
+#
+# PGP keystore configuration
+#
+# This section configures the PGP keystore used to store signing keys.
+#
+[keystore]
+# The path to the PGP keystore.
+# This should be a writable path, since Pacrat will store uploaded PGP keys here.
+#path = "pgp"
+
+#
+# Log configuration
+#
+# This section configures the log output of Pacrat.
+#
+[log]
+# The path to the log file where Pacrat will output logs.
+# Pacrat will also output logs to the standard output, so it's perfectly fine to set this to `/dev/null`, for example.
+#path = "pacrat.log.json"
+# The minimum level a log message needs to be in order to be logged.
+# Log messages with lower importance will not be logged.
+# This accepts "debug", "info", "warn", and "error".
+#level = "info"
+
+#
+# PGP key passphrase configuration
+#
+# This section is actually a table with each key being a username and each entry
+# providing passphrase for the given user's PGP key.
+#
+#[key.someuser]
+#passphrase = "super-secret-password"

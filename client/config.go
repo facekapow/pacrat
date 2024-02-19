@@ -15,3 +15,13 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+
+package main
+
+type Config struct {
+	General ConfigGeneral `toml:"general"`
+}
+
+type ConfigGeneral struct {
+	ServerURL string `toml:"server_url"`
+}
