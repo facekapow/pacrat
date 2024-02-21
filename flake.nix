@@ -45,6 +45,11 @@
         legacyPackages.pacrat-server = pacratServerPkg;
         nixosModules.default = { ... }: {
           imports = [ ./module.nix ];
+          nixpkgs.overlays = [
+            (self: super: {
+              pacrat = pacratServerPkg;
+            })
+          ];
         };
       }
     );
