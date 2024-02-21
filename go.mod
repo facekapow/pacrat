@@ -1,6 +1,6 @@
 module git.facekapow.dev/facekapow/pacrat
 
-go 1.22.0
+go 1.21.0
 
 require (
 	github.com/ProtonMail/gopenpgp/v3 v3.0.0-alpha.0-proton
