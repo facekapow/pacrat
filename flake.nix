@@ -33,6 +33,9 @@
         };
         nixosModules.default = { ... }: {
           imports = [ ./module.nix ];
+          nixos.overlays = [
+            self.overlays.default
+          ];
         };
       }
     );
