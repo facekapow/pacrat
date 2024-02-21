@@ -3,3 +3,4 @@ tmp/
 *.tar.zst
 tmprepo/
 .vscode
+/result
