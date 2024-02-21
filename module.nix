@@ -27,7 +27,7 @@ in
       after = [ "network.target" ];
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${pkgs.pacrat}/bin/pacrat-server -c ${settingsFile}";
+        ExecStart = "${pkgs.pacrat-server}/bin/pacrat-server -c ${settingsFile}";
         WorkingDirectory = "/var/lib/pacrat";
         NoNewPrivileges = true;
         LockPersonality = true;

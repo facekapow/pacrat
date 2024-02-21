@@ -9,47 +9,30 @@
 
   outputs =
     {
+      self,
       nixpkgs,
       utils,
       ...
-    }:
-    utils.lib.eachDefaultSystem(system:
+    }: {
+      overlays.default = final: prev: {
+        pacrat-server = final.callPackage ./pacrat-server.nix {};
+      };
+    } // utils.lib.eachDefaultSystem(system:
       let
-        pkgs = nixpkgs.legacyPackages.${system};
-
-        pacratServerPkg = pkgs.buildGoModule {
-          pname = "pacrat-server";
-          version = "0.1.0";
-
-          src = ./.;
-
-          vendorHash = null;
-
-          modRoot = "./server";
-
-          preInstall =
-            ''
-              mv $GOPATH/bin/{server,pacrat-server}
-            '';
-
-          meta = with nixpkgs.lib; {
-            description = "A simple Arch Linux custom repository manager";
-            homepage = "https://git.facekapow.dev/facekapow/pacrat";
-            license = licenses.agpl3;
-            maintainers = [];
-          };
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [
+            self.overlays.default
+          ];
         };
       in
       {
-        packages.default = pacratServerPkg;
-        legacyPackages.pacrat-server = pacratServerPkg;
+        packages = {
+          inherit (pkgs) pacrat-server;
+          default = pkgs.pacrat-server;
+        };
         nixosModules.default = { ... }: {
           imports = [ ./module.nix ];
-          nixpkgs.overlays = [
-            (self: super: {
-              pacrat = pacratServerPkg;
-            })
-          ];
         };
       }
     );
