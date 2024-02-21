@@ -3,7 +3,7 @@
 with lib;
 let
   cfg = config.services.pacrat;
-  settingsFormat = pkgs.formats.toml;
+  settingsFormat = pkgs.formats.toml {};
   settingsFile = settingsFormat.generate "pacrat.toml" cfg.settings;
 in
 {
