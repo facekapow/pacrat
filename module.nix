@@ -23,7 +23,7 @@ in
   config = mkIf cfg.enable {
     systemd.services.pacrat = {
       description = "A simple Arch Linux custom repository manager";
-      wantedBy = "multi-user.target";
+      wantedBy = [ "multi-user.target" ];
       after = [ "network.target" ];
       serviceConfig = {
         Type = "simple";
