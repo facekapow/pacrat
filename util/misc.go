@@ -27,6 +27,13 @@ func ClearSlice[T any](slice []T) {
 	}
 }
 
+func RemoveSliceElement[T any](slice *[]T, index int) {
+	var empty T
+	orig := *slice
+	orig[len(orig)-1], orig[index] = empty, orig[len(orig)-1]
+	*slice = orig[:len(orig)-1]
+}
+
 func FileExists(pathString string) bool {
 	stats, err := os.Stat(pathString)
 	if err != nil {

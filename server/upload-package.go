@@ -286,6 +286,22 @@ func uploadPackage(ctx *gin.Context) {
 	db.mutex.Lock()
 	defer db.mutex.Unlock()
 
+	allOK := false
+
+	prevPkgs := db.database.FindAll(pkg.Name)
+	for _, prevPkg := range prevPkgs {
+		_ = db.database.Remove(prevPkg.Name, prevPkg.Version)
+	}
+	defer func() {
+		if allOK {
+			return
+		}
+
+		for _, prevPkg := range prevPkgs {
+			_ = db.database.Add(prevPkg, true)
+		}
+	}()
+
 	if err = db.database.Add(pkg, true); err != nil {
 		if err == os.ErrExist {
 			ctx.JSON(http.StatusConflict, gin.H{
@@ -297,6 +313,17 @@ func uploadPackage(ctx *gin.Context) {
 		}
 		return
 	}
+	defer func() {
+		if allOK {
+			return
+		}
+
+		db.database.Remove(pkg.Name, pkg.Version)
+	}()
+
+	// the above deferred function will always remove the newly added package (even if it was previously in the database) upon failure.
+	// however, this is fine because the previous deferred function (which will always run after it) restores all the packages previously
+	// in the database.
 
 	err = db.database.Write(io.MultiWriter(tmpMainDBFile, mainDBSigWriter), io.MultiWriter(tmpFileDBFile, fileDBSigWriter), config.DB.Compression)
 	if err != nil {
@@ -314,7 +341,6 @@ func uploadPackage(ctx *gin.Context) {
 	//
 	// at each step, we save the old file (if it exists) in case the operation fails, so we can revert everything
 
-	allOK := false
 	dstPkgPath := path.Join(config.DB.PackageStorePath(), pkg.Name+"-"+pkg.Version+"-"+pkg.Architecture+".pkg.tar"+pkg.Compression.CompressionFileExtension())
 
 	// first, the package itself
@@ -381,6 +407,11 @@ func uploadPackage(ctx *gin.Context) {
 
 	// alright, everything's finally all good here!
 	allOK = true
+
+	// try to remove the files for the old versions (if any) but don't worry if any of them fail
+	for _, prevPkg := range prevPkgs {
+		_ = os.Remove(prevPkg.RepositoryFilename())
+	}
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"name":    pkg.Name,

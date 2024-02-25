@@ -25,6 +25,8 @@ import (
 	"os"
 	"strings"
 	"time"
+
+	"git.facekapow.dev/facekapow/pacrat/util"
 )
 
 type Database struct {
@@ -261,4 +263,51 @@ func (db *Database) Add(pkg *Package, replaceIfExists bool) error {
 	// if we got here, the new package is completely new (i.e. does not share a name and version with an existing package)
 	db.Packages = append(db.Packages, pkg)
 	return nil
+}
+
+func (db *Database) Find(name string, version string) (*Package, error) {
+	for _, dbPkg := range db.Packages {
+		if dbPkg.Name != name || dbPkg.Version != version {
+			continue
+		}
+
+		return dbPkg, nil
+	}
+
+	return nil, os.ErrNotExist
+}
+
+func (db *Database) FindAll(name string) []*Package {
+	result := make([]*Package, 0)
+
+	for _, dbPkg := range db.Packages {
+		if dbPkg.Name != name {
+			continue
+		}
+
+		result = append(result, dbPkg)
+	}
+
+	return result
+}
+
+func (db *Database) Remove(name string, version string) error {
+	for i, dbPkg := range db.Packages {
+		if dbPkg.Name != name || dbPkg.Version != version {
+			continue
+		}
+
+		util.RemoveSliceElement(&db.Packages, i)
+		return nil
+	}
+
+	return os.ErrNotExist
+}
+
+func (db *Database) RemoveAll(name string) {
+	pkgs := db.FindAll(name)
+
+	for _, pkg := range pkgs {
+		db.Remove(pkg.Name, pkg.Version)
+	}
 }

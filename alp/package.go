@@ -308,7 +308,7 @@ func (pkg *Package) generateDescription() string {
 		contents += "%" + key + "%\n" + strings.Join(values, "\n") + "\n\n"
 	}
 
-	formatEntry("FILENAME", pkg.Name+"-"+pkg.Version+"-"+pkg.Architecture+".pkg.tar"+pkg.Compression.CompressionFileExtension())
+	formatEntry("FILENAME", pkg.RepositoryFilename())
 	formatEntry("NAME", pkg.Name)
 	formatEntry("BASE", pkg.Base)
 	formatEntry("VERSION", pkg.Version)
@@ -341,4 +341,8 @@ func (pkg *Package) generateDescription() string {
 	formatEntry("CHECKDEPENDS", pkg.CheckDepends...)
 
 	return contents
+}
+
+func (pkg *Package) RepositoryFilename() string {
+	return pkg.Name + "-" + pkg.Version + "-" + pkg.Architecture + ".pkg.tar" + pkg.Compression.CompressionFileExtension()
 }
