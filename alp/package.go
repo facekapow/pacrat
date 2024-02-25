@@ -209,10 +209,10 @@ func readPackageFromDesc(source io.Reader) (*Package, error) {
 	for scanner.Scan() {
 		line := scanner.Text()
 		if expectingKey {
-			if !strings.HasPrefix(line, "%%") || !strings.HasSuffix(line, "%%") {
+			if !strings.HasPrefix(line, "%") || !strings.HasSuffix(line, "%") {
 				return nil, fmt.Errorf("invalid key: %s", line)
 			}
-			key = strings.TrimSuffix(strings.TrimPrefix(line, "%%"), "%%")
+			key = strings.TrimSuffix(strings.TrimPrefix(line, "%"), "%")
 			expectingKey = false
 		} else if len(line) == 0 {
 			// empty lines denote the end of the current key
