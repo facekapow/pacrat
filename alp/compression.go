@@ -65,16 +65,16 @@ func (cmp *Compression) MarshalText() ([]byte, error) {
 
 func (cmp *Compression) UnmarshalText(text []byte) error {
 	switch strings.ToLower(string(text)) {
-	case "gz", "gzip":
+	case "gz", "gzip", ".gz":
 		*cmp = CompressionGZ
 		return nil
-	case "bz", "bzip", "bz2", "bzip2":
+	case "bz", "bzip", "bz2", "bzip2", ".bz", ".bz2":
 		*cmp = CompressionBZ
 		return nil
-	case "xz":
+	case "xz", ".xz":
 		*cmp = CompressionXZ
 		return nil
-	case "zst", "zstd":
+	case "zst", "zstd", ".zst":
 		*cmp = CompressionZST
 		return nil
 	default:

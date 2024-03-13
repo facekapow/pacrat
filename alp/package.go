@@ -28,6 +28,7 @@ import (
 	"fmt"
 	"io"
 	"net/url"
+	"path"
 	"strconv"
 	"strings"
 	"time"
@@ -201,6 +202,7 @@ func readPackageFromDesc(source io.Reader) (*Package, error) {
 		OptionalDepends: make([]string, 0),
 		MakeDepends:     make([]string, 0),
 		CheckDepends:    make([]string, 0),
+		Compression:     CompressionZST,
 	}
 	scanner := bufio.NewScanner(source)
 	key := ""
@@ -220,7 +222,10 @@ func readPackageFromDesc(source io.Reader) (*Package, error) {
 		} else {
 			switch key {
 			case "FILENAME":
-				// we ignore this
+				tmp_compression := result.Compression
+				if err := tmp_compression.UnmarshalText([]byte(path.Ext(line))); err == nil {
+					result.Compression = tmp_compression
+				}
 			case "NAME":
 				result.Name = line
 			case "BASE":
