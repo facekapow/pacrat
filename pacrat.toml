@@ -95,5 +95,12 @@ name = "mycoolrepo"
 # This section is actually a table with each key being a username and each entry
 # providing passphrase for the given user's PGP key.
 #
+# This is not at all required; when a user uploads an encrypted PGP key, they'll
+# simply be asked for the passphrase each time they go to upload a file.
+#
+# In either case (whether the passphrase is provided here or only during an upload),
+# the encrypted keys are only temporarily unlocked for the upload; as soon as the
+# uploaded packages is signed, the unlocked key is wiped from memory.
+#
 #[key.someuser]
 #passphrase = "super-secret-password"
