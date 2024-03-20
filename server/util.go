@@ -21,7 +21,7 @@ package main
 import (
 	"net/http"
 
-	"git.facekapow.dev/facekapow/pacrat/common"
+	"github.com/facekapow/pacrat/common"
 	"github.com/gin-gonic/gin"
 )
 

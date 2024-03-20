@@ -194,7 +194,7 @@ func getServerClient(server string) (*http.Client, ClientInfo, error) {
 
 		Endpoint: provider.Endpoint(),
 
-		Scopes: []string{oidc.ScopeOpenID, "profile", "email", "pacrat_access"},
+		Scopes: []string{oidc.ScopeOpenID, "profile", "email", "pacrat_access", "offline_access"},
 	}
 
 	var authToken *oauth2.Token = nil

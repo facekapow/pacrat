@@ -16,7 +16,9 @@
 # that's either blank, `user`, or `admin` to indicate Pacrat API
 # access level.
 #
-# Pacrat must be set as a public/non-confidential client.
+# Pacrat must be set as a public/non-confidential client and must
+# be allowed to use refresh tokens (called "offline access" by some
+# auth servers).
 #
 [oidc]
 # The OIDC endpoint to use. This is also known as the OpenID issuer.

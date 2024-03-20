@@ -1,4 +1,4 @@
-module git.facekapow.dev/facekapow/pacrat
+module github.com/facekapow/pacrat
 
 go 1.21.0
 

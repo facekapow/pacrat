@@ -33,7 +33,7 @@ import (
 	"strings"
 	"time"
 
-	"git.facekapow.dev/facekapow/pacrat/util"
+	"github.com/facekapow/pacrat/util"
 )
 
 type Package struct {

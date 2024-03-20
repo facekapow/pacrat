@@ -29,9 +29,9 @@ import (
 	"syscall"
 	"time"
 
-	"git.facekapow.dev/facekapow/pacrat/alp"
-	"git.facekapow.dev/facekapow/pacrat/common"
 	"github.com/ProtonMail/gopenpgp/v3/crypto"
+	"github.com/facekapow/pacrat/alp"
+	"github.com/facekapow/pacrat/common"
 	"github.com/gin-gonic/gin"
 )
 

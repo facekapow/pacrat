@@ -30,7 +30,7 @@ import (
 	"os"
 	"path"
 
-	"git.facekapow.dev/facekapow/pacrat/common"
+	"github.com/facekapow/pacrat/common"
 	"github.com/google/subcommands"
 	"golang.org/x/term"
 )

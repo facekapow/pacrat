@@ -22,7 +22,7 @@ import (
 	"log/slog"
 	"path"
 
-	"git.facekapow.dev/facekapow/pacrat/alp"
+	"github.com/facekapow/pacrat/alp"
 )
 
 type ConfigOidc struct {

@@ -29,8 +29,8 @@ import (
 	"os"
 	"time"
 
-	"git.facekapow.dev/facekapow/pacrat/util"
 	"github.com/ProtonMail/gopenpgp/v3/crypto"
+	"github.com/facekapow/pacrat/util"
 	"github.com/google/subcommands"
 )
 
