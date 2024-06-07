@@ -21,7 +21,7 @@ buildGoModule {
   meta = with lib; {
     description = "A simple Arch Linux custom repository manager";
     homepage = "https://github.com/facekapow/pacrat";
-    license = licenses.agpl3;
+    license = licenses.agpl3Plus;
     maintainers = [];
   };
 }
